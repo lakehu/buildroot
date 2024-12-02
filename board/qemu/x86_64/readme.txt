@@ -1,8 +1,8 @@
 ### weston test 
 // guest kernel 5.15
-#Host Ubuntu20/qemu7.2 
+#Host Ubuntu18/qemu7.2 
 
-qemu-system-x86_64 -cpu host -m 1024m -kernel output/images/bzImage -drive file=output/images/rootfs.ext2,if=virtio,format=raw -append "console=ttyS0  root=/dev/vda" -net nic,model=virtio   -enable-kvm     -net user  -serial `tty`   -vga virtio   -display sdl,gl=es
+qemu-system-x86_64 -cpu host -kernel output/images/bzImage -drive file=output/images/rootfs.ext2,if=virtio,format=raw -append "console=ttyS0  root=/dev/vda" -net nic,model=virtio   -enable-kvm     -net user  -serial `tty`   -vga virtio   -display sdl,gl=es
 Linux version 5.15.0 (uie75906@hid3915u) (x86_64-buildroot-linux-gnu-gcc.br_real (Buildroot 2021.11-3-g7317c56c87) 10.3.0, GNU ld (GNU Binutils) 2.36.1) #1 SMP Sat Sep 24 14:19:26 CST 2022
 Command line: console=ttyS0  root=/dev/vda
 ............
