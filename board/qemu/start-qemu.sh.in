@@ -4,8 +4,8 @@ BINARIES_DIR="${0%/*}/"
 # shellcheck disable=SC2164
 cd "${BINARIES_DIR}"
 
-mode_serial=false
-mode_sys_qemu=false
+mode_serial=true
+mode_sys_qemu=true
 while [ "$1" ]; do
     case "$1" in
     --serial-only|serial-only) mode_serial=true; shift;;
