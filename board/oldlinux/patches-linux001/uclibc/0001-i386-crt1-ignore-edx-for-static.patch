@@ -1,0 +1,17 @@
+i386: crt1: ignore %edx in static programs
+
+Linux 0.01 (mariuz ELF port) leaves %edx uncleared on execve, so
+__uClibc_fini() would call a garbage __rtld_fini at exit.
+
+--- a/libc/sysdeps/linux/i386/crt1.S
++++ b/libc/sysdeps/linux/i386/crt1.S
+@@ -93,6 +93,9 @@
+ 	   which grow downwards).  */
+ 	pushl %esp
+ 
++	/* Linux 0.01 (mariuz ELF port) does not clear %edx on execve, so
++	   ignore it (this toolchain is static-only) instead of calling garbage at exit.  */
++	xorl %edx, %edx
+ 	pushl %edx		/* Push address of the shared library
+ 				   termination function.  */
+ 
