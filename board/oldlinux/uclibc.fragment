@@ -1,0 +1,2 @@
+# Linux 0.01/0.11 lack statx (383) and clock_gettime64 (403): use 32-bit time_t syscalls
+# UCLIBC_USE_TIME64 is not set
