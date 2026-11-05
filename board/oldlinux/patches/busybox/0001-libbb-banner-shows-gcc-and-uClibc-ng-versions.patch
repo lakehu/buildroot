@@ -1,0 +1,26 @@
+libbb: banner shows gcc and uClibc-ng versions
+
+For static uClibc-ng builds, append the compiler version and the
+uClibc-ng version to the build date in bb_banner, e.g.
+  BusyBox v1.37.0 (2026-11-05 17:20:00 CST, gcc 13.3.0, uClibc-ng 1.0.59)
+so the binary on an old kernel (Linux 0.01/0.11) tells how it was built.
+
+--- a/libbb/messages.c
++++ b/libbb/messages.c
+@@ -8,8 +8,16 @@
+ 
+ /* allow version to be extended, via CFLAGS */
+ #ifndef BB_EXTRA_VERSION
++#ifdef __UCLIBC__
++/* also show compiler and C library (static builds for old kernels) */
++#define BB_STR1(x) #x
++#define BB_STR(x) BB_STR1(x)
++#define BB_EXTRA_VERSION " ("AUTOCONF_TIMESTAMP", gcc "__VERSION__", uClibc-ng " \
++	BB_STR(__UCLIBC_MAJOR__)"."BB_STR(__UCLIBC_MINOR__)"."BB_STR(__UCLIBC_SUBLEVEL__)")"
++#else
+ #define BB_EXTRA_VERSION " ("AUTOCONF_TIMESTAMP")"
+ #endif
++#endif
+ 
+ const char bb_banner[] ALIGN1 = "BusyBox v" BB_VER BB_EXTRA_VERSION;
+ 
